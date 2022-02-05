@@ -1,0 +1,7 @@
+LIBRARY   structs
+EXPORTS
+    socket_open
+    get_mac_addr
+    socket_close
+    socket_send
+    
