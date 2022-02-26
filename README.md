@@ -12,22 +12,18 @@ See py/ for how to detect your card. You'll get message about firmward and resol
 
 ## Sending data to the Colorlight 5A
 
-For a short video of sendframe.dart: https://youtu.be/EI8ke8pR064
-
-### Creating the Dart FFI bindings
+For a short video of the old sendframe.dart: https://youtu.be/EI8ke8pR064
+The newer examples are colorlight.dart to test for tearing (there is none visible),
+and loadimg.dart to display an image: https://youtu.be/VZurrjcs8FA
 
 ```
-$ dart run ffigen
+./loadimg.exe --nic=enp1s0 --image PICTUREFILE 
 ```
 
-### Creating the executable
+### Building the executables
 
-This will yield you a sendframe.exe which you can run:
+This will build the executables:
 ```
 $ make
-```
-Alternatively (adjust the location of the dart binary as needed):
-```
-$ sudo ~/dart/bin/dart ./sendframe.dart
 ```
 
