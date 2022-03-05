@@ -81,7 +81,7 @@ void main() async {
     print("Set nic environment variable first");
     exit(20);
   } else {
-    var myl2eth = L2Ethernet(ethName);
+    var myl2eth = await L2Ethernet.setup(ethName);
 
     myl2eth.open();
 

@@ -99,7 +99,7 @@ void main(List<String> args) async {
     exit(10);
   }
 
-  var myl2eth = L2Ethernet(ethName);
+  var myl2eth = await L2Ethernet.setup(ethName);
 
   myl2eth.open();
 
