@@ -86,13 +86,17 @@ void main(List<String> args) async {
   parser.addOption('image', help: "Image name");
   parser.addOption('brightness', help: "Brightness in %", defaultsTo: "1");
   parser.addFlag('resize', help: "Resize width to fit", defaultsTo: false);
+  parser.addOption('text1', help: "Top text to display", defaultsTo: "");
+  parser.addOption('text2', help: "Bottom text to display", defaultsTo: "");
 
   var opts = parser.parse(args);
 
   var ethName = opts['nic'];
   var imageFile = opts['image'];
   var brightnessPercent = int.tryParse(opts['brightness']);
-  final resize = opts['resize'];
+  bool resize = opts['resize'];
+  String myText1 = opts['text1'];
+  String myText2 = opts['text2'];
 
   if (ethName == null || imageFile == null || brightnessPercent == null) {
     print(parser.usage);
@@ -112,7 +116,8 @@ void main(List<String> args) async {
   // one vertical white line from left to right
   // to see tearing or lack of smoothness
 
-  await loadImage(imageFile, brightnessPercent, myl2eth, src_mac, dest_mac);
+  await loadImage(imageFile, myText1, myText2, brightnessPercent, myl2eth,
+      src_mac, dest_mac);
 
   myl2eth.close();
   deleteFrames();
@@ -122,12 +127,27 @@ const wait = true;
 
 /// Load the image and send to the Colorlight 5A
 ///
-Future<void> loadImage(String imageFile, int brightnessPercent, L2Ethernet l2,
-    int src_mac, int dest_mac) async {
+Future<void> loadImage(String imageFile, String text1, String text2,
+    int brightnessPercent, L2Ethernet l2, int src_mac, int dest_mac) async {
   int n;
 
   final imageOriginal = decodeImage(File(imageFile).readAsBytesSync())!;
-  final image = copyResize(imageOriginal, width: columnCount);
+  var image = copyResize(imageOriginal, width: columnCount);
+
+  // Examples how to draw circles and lines:
+  // drawCircle(image, 64, 32, 30, 0x80ffffff);
+  // drawLine(image, 10, 50, 120, 20, 0x8000ff00, thickness: 2, antialias: true);
+
+  if (text2 == "") {
+    drawStringCentered(image, arial_24, text1, y: (rowCount - 24) ~/ 2);
+  } else {
+    print("Printing text1=$text1");
+    drawStringCentered(image, arial_24, text1, y: (rowCount ~/ 2 - 24) ~/ 2);
+    print("Printing text2=$text2");
+    drawStringCentered(image, arial_24, text2,
+        y: (rowCount ~/ 2 - 24) ~/ 2 + rowCount ~/ 2);
+  }
+
   final imageData = image.getBytes(format: Format.bgr);
 
   int brightness = getBrightness(brightnessPercent);
