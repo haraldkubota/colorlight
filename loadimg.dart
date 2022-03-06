@@ -141,9 +141,7 @@ Future<void> loadImage(String imageFile, String text1, String text2,
   if (text2 == "") {
     drawStringCentered(image, arial_24, text1, y: (rowCount - 24) ~/ 2);
   } else {
-    print("Printing text1=$text1");
     drawStringCentered(image, arial_24, text1, y: (rowCount ~/ 2 - 24) ~/ 2);
-    print("Printing text2=$text2");
     drawStringCentered(image, arial_24, text2,
         y: (rowCount ~/ 2 - 24) ~/ 2 + rowCount ~/ 2);
   }
