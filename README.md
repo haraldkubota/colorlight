@@ -19,6 +19,10 @@ and loadimg.dart to display an image: https://youtu.be/VZurrjcs8FA
 ```
 ./loadimg.exe --nic=enp1s0 --image PICTUREFILE 
 ```
+and a more complex example:
+```
+./loadimg.exe --nic enp1s0 --image rose.png --text1 "$(date '+%a %b-%d')" --text2 "$(date +%H:%M)" 
+```
 
 ### Building the executables
 
