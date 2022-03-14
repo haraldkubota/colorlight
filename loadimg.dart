@@ -88,6 +88,7 @@ void main(List<String> args) async {
   parser.addFlag('resize', help: "Resize width to fit", defaultsTo: false);
   parser.addOption('text1', help: "Top text to display", defaultsTo: "");
   parser.addOption('text2', help: "Bottom text to display", defaultsTo: "");
+  parser.addFlag('black', help: "Use black for text", defaultsTo: false);
 
   var opts = parser.parse(args);
 
@@ -97,6 +98,7 @@ void main(List<String> args) async {
   bool resize = opts['resize'];
   String myText1 = opts['text1'];
   String myText2 = opts['text2'];
+  bool black = opts['black'];
 
   if (ethName == null || imageFile == null || brightnessPercent == null) {
     print(parser.usage);
@@ -116,8 +118,8 @@ void main(List<String> args) async {
   // one vertical white line from left to right
   // to see tearing or lack of smoothness
 
-  await loadImage(imageFile, myText1, myText2, brightnessPercent, myl2eth,
-      src_mac, dest_mac);
+  await loadImage(imageFile, myText1, myText2, black, brightnessPercent,
+      myl2eth, src_mac, dest_mac);
 
   myl2eth.close();
   deleteFrames();
@@ -127,8 +129,15 @@ const wait = true;
 
 /// Load the image and send to the Colorlight 5A
 ///
-Future<void> loadImage(String imageFile, String text1, String text2,
-    int brightnessPercent, L2Ethernet l2, int src_mac, int dest_mac) async {
+Future<void> loadImage(
+    String imageFile,
+    String text1,
+    String text2,
+    bool useBlack,
+    int brightnessPercent,
+    L2Ethernet l2,
+    int src_mac,
+    int dest_mac) async {
   int n;
 
   final imageOriginal = decodeImage(File(imageFile).readAsBytesSync())!;
@@ -138,12 +147,16 @@ Future<void> loadImage(String imageFile, String text1, String text2,
   // drawCircle(image, 64, 32, 30, 0x80ffffff);
   // drawLine(image, 10, 50, 120, 20, 0x8000ff00, thickness: 2, antialias: true);
 
+  var textColor = 0xffffffff;
+  if (useBlack) textColor = 0xff000000;
   if (text2 == "") {
-    drawStringCentered(image, arial_24, text1, y: (rowCount - 24) ~/ 2);
+    drawStringCentered(image, arial_24, text1,
+        y: (rowCount - 24) ~/ 2, color: textColor);
   } else {
-    drawStringCentered(image, arial_24, text1, y: (rowCount ~/ 2 - 24) ~/ 2);
+    drawStringCentered(image, arial_24, text1,
+        y: (rowCount ~/ 2 - 24) ~/ 2, color: textColor);
     drawStringCentered(image, arial_24, text2,
-        y: (rowCount ~/ 2 - 24) ~/ 2 + rowCount ~/ 2);
+        y: (rowCount ~/ 2 - 24) ~/ 2 + rowCount ~/ 2, color: textColor);
   }
 
   final imageData = image.getBytes(format: Format.bgr);
