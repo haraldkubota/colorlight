@@ -10,6 +10,10 @@ Connect the card's Ethernet port (either one) to a GBit NIC or a L2 switch. If y
 
 See py/ for how to detect your card. You'll get message about firmward and resolution, or it'll hang.
 
+## Requirement
+
+You need the MARCH compatible libeth.so from https://github.com/haraldkubota/l2-ethernet, so compile this first and copy to ./lib/$MARCH/
+
 ## Sending data to the Colorlight 5A
 
 For a short video of the old sendframe.dart: https://youtu.be/EI8ke8pR064
@@ -28,6 +32,9 @@ and a more complex example:
 
 This will build the executables:
 ```
+# Copy MARCH compatible libeth.so from the l2-ethernet git repo
+$ cp -pr ../l2-ethernet/lib/x86_64 lib
+$ dart pub get
 $ make
 ```
 
