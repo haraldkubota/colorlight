@@ -31,11 +31,11 @@ const brightness = 0x28;
 const brightnessPercent = 3;
 
 void initFrames() {
-  frameData0107[11] = brightnessPercent;
-  frameData0107[12] = 5;
-  frameData0107[14] = brightnessPercent;
-  frameData0107[15] = brightnessPercent;
-  frameData0107[16] = brightnessPercent;
+  frameData0107[21] = brightnessPercent;
+  frameData0107[22] = 5;
+  frameData0107[24] = brightnessPercent;
+  frameData0107[25] = brightnessPercent;
+  frameData0107[26] = brightnessPercent;
 
   frameData0aff[0] = brightness;
   frameData0aff[1] = brightness;
