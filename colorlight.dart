@@ -44,8 +44,8 @@ void initFrames() {
   frameData5500[0] = 0;
   frameData5500[1] = 0;
   frameData5500[2] = 0;
-  frameData5500[3] = 0;
-  frameData5500[4] = columnCount;
+  frameData5500[3] = columnCount >> 8;
+  frameData5500[4] = columnCount % 0xFF;
   frameData5500[5] = 0x08;
   frameData5500[6] = 0x88;
 }
