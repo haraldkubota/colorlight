@@ -21,4 +21,7 @@ doc/api/
 *.js.map
 
 *.exe
-
+greenfield.jpg
+lib/
+rose.png
+sunset.png
