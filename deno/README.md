@@ -14,5 +14,6 @@ Emit sweep
 sudo setcap 'cap_net_admin,cap_net_raw+pe' sweep
 ❯ ./sweep
 ```
-You should see something like this: https://youtu.be/lolCBEjhoo4
+You should see something like this:
+[![sweeping lines](./img/sweep.webp)](https://youtu.be/lolCBEjhoo4)
 (this recording was done with the Dart version, but it looks identical when using Deno).
