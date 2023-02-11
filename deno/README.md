@@ -19,3 +19,8 @@ You should see something like this:
 [![sweeping lines](./img/sweep.webp)](https://youtu.be/lolCBEjhoo4)
 
 (this recording was done with the Dart version, but it looks identical when using Deno).
+
+## Supported Architectures
+
+Tested and working on x86_64 with Deno 1.30.3 and aarch64 with Deno 1.29.4
+
