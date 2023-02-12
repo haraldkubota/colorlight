@@ -46,7 +46,12 @@ export class ColorLight {
     set brightness(percent: number) {
         const brightnessMap = [
             [0, 0x00],
-            [1, 0x28],
+            [1, 0x03],
+            [2, 0x05],
+            [4, 0x0a],
+            [5, 0x0d],
+            [6, 0x0f],
+            [10, 0x1a],
             [25, 0x40],
             [50, 0x80],
             [75, 0xbf],
