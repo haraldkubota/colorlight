@@ -29,7 +29,7 @@ async function main(args: string[]) {
     const nic = parsed.nic || 'eth0';
     const delayTime = parsed.delay || 0;
     const imageFiles = parsed._;
-    const resizeFlag = parsed.resize || true;
+    const resizeFlag = parsed.resize || false;
     const brightness = parsed.brightness || 1;
 
     // console.log(parsed);
