@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": true,
+    "outDir": "build",
+    "esModuleInterop": true,
+    "types": ["node", "jest"],
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "importsNotUsedAsValues": "remove",
+    "strict": true,
+    "baseUrl": ".",
+    "lib": [
+      "esnext",
+      "DOM",
+      "DOM.Iterable"
+    ],
+    "typeRoots": ["node_modules/@types", "src/types"]
+  },
+  "include": [
+    "src", "test"
+  ]
+}
