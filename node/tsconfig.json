@@ -2,6 +2,7 @@
   "compilerOptions": {
     "allowJs": true,
     "checkJs": true,
+    "outDir": "build",
     "esModuleInterop": true,
     "types": ["node", "jest"],
     "forceConsistentCasingInFileNames": true,

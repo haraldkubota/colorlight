@@ -13,6 +13,63 @@
 // // Send data to the socket
 // int socket_send(int sockfd, unsigned long int src_mac, unsigned long int dest_mac, unsigned int ether_type, uint8_t *data, int len, unsigned int flags);
 
+napi_value SocketOpen(napi_env env, napi_callback_info info) {
+    size_t argc = 1;
+    napi_value args[1];
+
+    NAPI_CALL(env, napi_get_cb_info(env, info, &argc, args, NULL, NULL));
+
+    NAPI_ASSERT(env, argc == 1, "Wrong number of arguments");
+
+    napi_valuetype valuetype0;
+    NAPI_CALL(env, napi_typeof(env, args[0], &valuetype0));
+
+    NAPI_ASSERT(env, valuetype0 == napi_string, "Wrong type of arguments 0. Expected string");
+
+    size_t str_size;
+    size_t str_size_read;
+    napi_get_value_string_utf8(env, args[0], NULL, 0, &str_size);
+
+    char* ifName;
+    ifName = (char*)calloc(str_size + 1, sizeof(char));
+    str_size = str_size + 1;
+    napi_get_value_string_utf8(env, args[0], ifName, str_size, &str_size_read);
+
+
+    int result = socket_open((uint8_t *) ifName);
+
+    if (ifName != NULL) {
+        free(ifName);
+    }
+
+    napi_value napi_result;
+    napi_create_int32(env, result, &napi_result);
+    return napi_result;
+}
+
+napi_value SocketClose(napi_env env, napi_callback_info info) {
+    size_t argc = 1;
+    napi_value args[1];
+
+    NAPI_CALL(env, napi_get_cb_info(env, info, &argc, args, NULL, NULL));
+
+    NAPI_ASSERT(env, argc == 1, "Wrong number of arguments");
+
+    napi_valuetype valuetype0;
+    NAPI_CALL(env, napi_typeof(env, args[0], &valuetype0));
+
+    NAPI_ASSERT(env, valuetype0 == napi_number, "Wrong type of arguments 0. Expected string");
+
+    int32_t value0;
+    napi_get_value_int32(env, args[0], &value0);
+
+    int result = socket_close((int *) value0);
+
+    napi_value napi_result;
+    napi_create_int32(env, result, &napi_result);
+    return napi_result;
+}
+
 napi_value SocketSend(napi_env env, napi_callback_info info) {
     size_t argc = 7;
     napi_value args[7];
@@ -25,30 +82,30 @@ napi_value SocketSend(napi_env env, napi_callback_info info) {
     NAPI_CALL(env, napi_typeof(env, args[0], &valuetype0));
 
     napi_valuetype valuetype1;
-    NAPI_CALL(env, napi_typeof(env, args[1], &valuetype0));
+    NAPI_CALL(env, napi_typeof(env, args[1], &valuetype1));
 
     napi_valuetype valuetype2;
-    NAPI_CALL(env, napi_typeof(env, args[2], &valuetype0));
+    NAPI_CALL(env, napi_typeof(env, args[2], &valuetype2));
 
     napi_valuetype valuetype3;
-    NAPI_CALL(env, napi_typeof(env, args[3], &valuetype0));
+    NAPI_CALL(env, napi_typeof(env, args[3], &valuetype3));
 
     napi_valuetype valuetype4;
-    NAPI_CALL(env, napi_typeof(env, args[4], &valuetype0));
+    NAPI_CALL(env, napi_typeof(env, args[4], &valuetype4));
 
     napi_valuetype valuetype5;
-    NAPI_CALL(env, napi_typeof(env, args[5], &valuetype0));
+    NAPI_CALL(env, napi_typeof(env, args[5], &valuetype5));
 
     napi_valuetype valuetype6;
-    NAPI_CALL(env, napi_typeof(env, args[6], &valuetype0));
+    NAPI_CALL(env, napi_typeof(env, args[6], &valuetype6));
 
-    NAPI_ASSERT(env, valuetype0 == napi_bigint, "Wrong type of arguments 0. Expected number");
+    NAPI_ASSERT(env, valuetype0 == napi_number, "Wrong type of arguments 0. Expected number");
     NAPI_ASSERT(env, valuetype1 == napi_bigint, "Wrong type of arguments 1. Expected number");
     NAPI_ASSERT(env, valuetype2 == napi_bigint, "Wrong type of arguments 2. Expected number");
-    NAPI_ASSERT(env, valuetype3 == napi_bigint, "Wrong type of arguments 3. Expected number");
+    NAPI_ASSERT(env, valuetype3 == napi_number, "Wrong type of arguments 3. Expected number");
     NAPI_ASSERT(env, valuetype4 == napi_object, "Wrong type of arguments 4. Expected array");
-    NAPI_ASSERT(env, valuetype5 == napi_bigint, "Wrong type of arguments 5. Expected number");
-    NAPI_ASSERT(env, valuetype6 == napi_bigint, "Wrong type of arguments 6. Expected number");
+    NAPI_ASSERT(env, valuetype5 == napi_number, "Wrong type of arguments 5. Expected number");
+    NAPI_ASSERT(env, valuetype6 == napi_number, "Wrong type of arguments 6. Expected number");
 
     bool is_typedarray;
     napi_value input_array = args[4];
@@ -67,28 +124,28 @@ napi_value SocketSend(napi_env env, napi_callback_info info) {
     size_t byte_length;
     NAPI_CALL(env, napi_get_arraybuffer_info(env, input_buffer, &data, &byte_length));
 
-    int64_t bigValue0;
+    int32_t bigValue0;
     uint64_t bigValue1;
     uint64_t bigValue2;
-    uint64_t bigValue3;
-    uint64_t bigValue5;
-    uint64_t bigValue6;
+    int32_t bigValue3;
+    int32_t bigValue5;
+    int32_t bigValue6;
 
     bool lossless;
     napi_status status;
 
-    status = napi_get_value_bigint_int64(env, args[0], &bigValue0, &lossless);
-    NAPI_ASSERT(env, status == napi_ok && lossless , "Could not extract data for argument 0");
+    status = napi_get_value_int32(env, args[0], &bigValue0);
+    NAPI_ASSERT(env, status == napi_ok , "Could not extract data for argument 0");
     status = napi_get_value_bigint_uint64(env, args[1], &bigValue1, &lossless);
     NAPI_ASSERT(env, status == napi_ok && lossless , "Could not extract data for argument 1");
     status = napi_get_value_bigint_uint64(env, args[2], &bigValue2, &lossless);
     NAPI_ASSERT(env, status == napi_ok && lossless , "Could not extract data for argument 2");
-    status = napi_get_value_bigint_uint64(env, args[3], &bigValue3, &lossless);
-    NAPI_ASSERT(env, status == napi_ok && lossless , "Could not extract data for argument 3");
-    status = napi_get_value_bigint_uint64(env, args[5], &bigValue5, &lossless);
-    NAPI_ASSERT(env, status == napi_ok && lossless , "Could not extract data for argument 5");
-    status = napi_get_value_bigint_uint64(env, args[6], &bigValue6, &lossless);
-    NAPI_ASSERT(env, status == napi_ok && lossless , "Could not extract data for argument 6");
+    status = napi_get_value_int32(env, args[3], &bigValue3);
+    NAPI_ASSERT(env, status == napi_ok , "Could not extract data for argument 3");
+    status = napi_get_value_int32(env, args[5], &bigValue5);
+    NAPI_ASSERT(env, status == napi_ok , "Could not extract data for argument 5");
+    status = napi_get_value_int32(env, args[6], &bigValue6);
+    NAPI_ASSERT(env, status == napi_ok , "Could not extract data for argument 6");
 
 
     uint8_t* buffer = (uint8_t *)(data) + byte_offset;
@@ -103,6 +160,8 @@ napi_value SocketSend(napi_env env, napi_callback_info info) {
 napi_value Init(napi_env env, napi_value exports) {
     napi_property_descriptor descriptors[] = {
         DECLARE_NAPI_PROPERTY("socketSend", SocketSend),
+        DECLARE_NAPI_PROPERTY("socketOpen", SocketOpen),
+        DECLARE_NAPI_PROPERTY("socketClose", SocketClose),
     };
 
 
