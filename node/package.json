@@ -1,0 +1,21 @@
+{
+  "name": "colorlight",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "main": "tsx src/main.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^20.5.3",
+    "bindings": "^1.3.0",
+    "node-addon-api": "^1.2.0",
+    "tslib": "^2.4.1",
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "imagescript": "^1.3.0",
+    "tsx": "3.x.x"
+  },
+  "gypefile": true
+}
