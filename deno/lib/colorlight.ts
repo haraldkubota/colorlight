@@ -104,21 +104,18 @@ export class ColorLight {
         let n = this.eth.send(this.src_mac, this.dest_mac, 0x0a00 + this.brightnessValue, this.frameData0aff,
             this.frame0affDataLength, this.flags);
 
-        for (let t = 0; t < this.width; ++t) {
-            // Send one complete frame
+        // Send one complete frame
 
-            for (let y = 0; y < this.height; ++y) {
-                this.frame5500fromImage(y, img);
-                this.frameData5500[0] = y;
-                n = this.eth.send(this.src_mac, this.dest_mac, 0x5500, this.frameData5500, this.frame5500DataLength, this.flags);
-            }
-
-            // Without the following delay the end of the bottom row module flickers in the last line
-            // if (wait) await Future.delayed(Duration(milliseconds: 1));
-            await delay(1);
-
-            n = this.eth.send(this.src_mac, this.dest_mac, 0x0107, this.frameData0107, this.frame0107DataLength, this.flags);
+        for (let y = 0; y < this.height; ++y) {
+            this.frame5500fromImage(y, img);
+            this.frameData5500[0] = y;
+            n = this.eth.send(this.src_mac, this.dest_mac, 0x5500, this.frameData5500, this.frame5500DataLength, this.flags);
         }
-    }
 
+        // Without the following delay the end of the bottom row module flickers in the last line
+        // if (wait) await Future.delayed(Duration(milliseconds: 1));
+        await delay(1);
+
+        n = this.eth.send(this.src_mac, this.dest_mac, 0x0107, this.frameData0107, this.frame0107DataLength, this.flags);
+    }
 }
